@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZOVA — Connect the World</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #05070d;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      background: #080b12;
+      overflow: hidden;
+    }
+
+    header {
+      height: 64px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #202635;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(8, 11, 18, 0.96);
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #19aaff;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 18px;
+      font-size: 22px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      padding: 14px 8px;
+      border-bottom: 1px solid #202635;
+    }
+
+    .tab {
+      color: #8992a5;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .tab.active {
+      color: #19aaff;
+    }
+
+    .discovery {
+      margin: 14px;
+      padding: 16px;
+      border: 1px solid #243044;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0d1421, #101a2b);
+    }
+
+    .discovery h2 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .discovery p {
+      color: #9ba6b8;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 8px 13px;
+      border-radius: 20px;
+      background: #172235;
+      color: #d9e2ef;
+      font-size: 12px;
+    }
+
+    .video {
+      height: 590px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 30% 20%, #173b63, transparent 35%),
+        radial-gradient(circle at 80% 70%, #321c58, transparent 40%),
+        linear-gradient(160deg, #111827, #03050a);
+    }
+
+    .video::before {
+      content: "ZOVA";
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 62px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.06);
+    }
+
+    .video-info {
+      position: absolute;
+      left: 18px;
+      bottom: 25px;
+      width: 76%;
+    }
+
+    .creator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #19aaff, #7d42ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .creator-name {
+      font-weight: 800;
+    }
+
+    .follow {
+      margin-left: auto;
+      border: 1px solid #19aaff;
+      border-radius: 18px;
+      padding: 6px 12px;
+      color: #19aaff;
+      font-size: 12px;
+    }
+
+    .caption {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #eef3fa;
+    }
+
+    .ai-label {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: rgba(25,170,255,0.15);
+      color: #42bdff;
+      font-size: 11px;
+    }
+
+    .actions {
+      position: absolute;
+      right: 14px;
+      bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .action {
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .action small {
+      display: block;
+      margin-top: 4px;
+      color: #cbd3df;
+      font-size: 11px;
+    }
+
+    nav {
+      height: 72px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #080b12;
+      border-top: 1px solid #202635;
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+    }
+
+    nav div {
+      color: #7f899b;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    nav span {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    nav .active {
+      color: #19aaff;
+    }
+
+    .create {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #19aaff, #6d4aff);
+      color: white;
+      font-size: 27px;
+      box-shadow: 0 5px 20px rgba(25,170,255,0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="logo">ZOVA</div>
+
+    <div class="header-icons">
+      <span>⌕</span>
+      <span>🔔</span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active">For You</div>
+    <div class="tab">Following</div>
+    <div class="tab">Discover</div>
+  </div>
+
+  <section class="discovery">
+    <h2>🌍 Discover the world</h2>
+
+    <p>
+      Meet people, discover ideas and explore content
+      from anywhere — even from people you don't know.
+    </p>
+
+    <div class="tags">
+      <div class="tag">🔥 Trending</div>
+      <div class="tag">🎵 Music</div>
+      <div class="tag">⚽ Sports</div>
+      <div class="tag">💡 Tech</div>
+      <div class="tag">😂 Comedy</div>
+    </div>
+  </section>
+
+  <section class="video">
+
+    <div class="video-info">
+
+      <div class="creator">
+        <div class="avatar">Z</div>
+
+        <div class="creator-name">
+          @zova_creator
+        </div>
+
+        <div class="follow">
+          + Follow
+        </div>
+      </div>
+
+      <div class="caption">
+        Your idea can reach the world 🌍
+        <br>
+        Welcome to the new generation of social discovery.
+      </div>
+
+      <div class="ai-label">
+        ✨ ZOVA AI • Smart Discovery
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <div class="action">
+        ❤️
+        <small>12.5K</small>
+      </div>
+
+      <div class="action">
+        💬
+        <small>842</small>
+      </div>
+
+      <div class="action">
+        ↗️
+        <small>Share</small>
+      </div>
+
+      <div class="action">
+        🌍
+        <small>Discover</small>
+      </div>
+
+    </div>
+
+  </section>
+
+  <nav>
+
+    <div class="active">
+      <span>⌂</span>
+      Home
+    </div>
+
+    <div>
+      <span>🔎</span>
+      Discover
+    </div>
+
+    <div class="create">
+      +
+    </div>
+
+    <div>
+      <span>💬</span>
+      Messages
+    </div>
+
+    <div>
+      <span>👤</span>
+      Profile
+    </div>
+
+  </nav>
+
+</div>
+
+</body>
+</html>
