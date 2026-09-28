@@ -363,6 +363,115 @@
   </nav>
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
+  const followButton = document.querySelector(".follow");
+
+  if (followButton) {
+    followButton.addEventListener("click", () => {
+      if (followButton.textContent.trim() === "+ Follow") {
+        followButton.textContent = "Following";
+        followButton.style.background = "#19aaff";
+        followButton.style.color = "#fff";
+      } else {
+        followButton.textContent = "+ Follow";
+        followButton.style.background = "transparent";
+        followButton.style.color = "#19aaff";
+      }
+    });
+  }
+
+  const actions = document.querySelectorAll(".action");
+
+  if (actions.length >= 1) {
+    actions[0].addEventListener("click", () => {
+      const count = actions[0].querySelector("small");
+      if (count) {
+        let number = parseInt(count.textContent.replace("K", "")) || 0;
+        number++;
+        count.textContent = number + "K";
+      }
+    });
+  }
+
+  if (actions.length >= 2) {
+    actions[1].addEventListener("click", () => {
+      alert("Comments will be available soon.");
+    });
+  }
+
+  if (actions.length >= 3) {
+    actions[2].addEventListener("click", async () => {
+      const shareData = {
+        title: "ZOVA",
+        text: "Your idea can reach the world 🌍"
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (error) {}
+      } else {
+        alert("Share is not supported on this browser.");
+      }
+    });
+  }
+
+  if (actions.length >= 4) {
+    actions[3].addEventListener("click", () => {
+      document.querySelector(".discovery")?.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  }
+
+  const tabs = document.querySelectorAll(".tab");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(item => item.classList.remove("active"));
+      tab.classList.add("active");
+    });
+  });
+
+  const navItems = document.querySelectorAll("nav > div");
+
+  navItems.forEach(item => {
+    item.addEventListener("click", () => {
+      navItems.forEach(nav => nav.classList.remove("active"));
+      item.classList.add("active");
+
+      const label = item.textContent.trim();
+
+      if (label.includes("Create")) {
+        alert("Create feature is coming soon.");
+      }
+
+      if (label.includes("Messages")) {
+        alert("Messages feature is coming soon.");
+      }
+
+      if (label.includes("Profile")) {
+        alert("Profile feature is coming soon.");
+      }
+
+      if (label.includes("Discover")) {
+        document.querySelector(".discovery")?.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+
+      if (label.includes("Home")) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    });
+  });
+
+});
+</script>
 </body>
 </html>
